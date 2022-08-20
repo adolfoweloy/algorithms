@@ -1,105 +1,93 @@
 package com.adolfoeloy;
 
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 public class FileSystem {
-    private final Node root;
+    private final Directory root;
 
     public FileSystem() {
-        this.root = new Node();
-        this.root.isDir = true;
+        this.root = new Directory();
     }
 
-    private static class Node {
-        boolean isDir;
-        boolean isFile;
+    private static class Directory {
         String name;
-        String content;
-        Map<String, Node> children;
-
-        Node() {
-            this.children = new HashMap<>();
-        }
-
-        static Node newDirectory() {
-            Node n = new Node();
-            n.isDir = true;
-            return n;
-        }
-
-        static Node newFile() {
-            Node n = new Node();
-            n.isFile = true;
-            return n;
-        }
+        Map<String, Directory> children = new HashMap<>();
+        Map<String, String> files = new HashMap<>();
     }
 
     public List<String> ls(String path) {
-        Node node = root;
+        List<String> result = new ArrayList<>();
+        Directory directory = root;
         StringTokenizer tokenizer = new StringTokenizer(path, "/");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            Node child = node.children.get(token);
+            Directory child = directory.children.get(token);
             if (child != null) {
-                node = child;
+                directory = child;
+            } else {
+                if (directory.files.containsKey(token)) {
+                    return Collections.singletonList(token);
+                }
             }
         }
-        if (node.isDir) {
-            return node.children.keySet().stream().sorted().collect(Collectors.toList());
-        }
-        return Collections.singletonList(node.name);
+
+        result.addAll(directory.children.keySet());
+        result.addAll(directory.files.keySet());
+        return result.stream().sorted().collect(Collectors.toList());
     }
 
     public void mkdir(String path) {
-        addEntry(path, true);
+        addDirectory(path);
     }
 
     public void addContentToFile(String filePath, String content) {
-        Node file = addEntry(filePath, false);
-        assert(file.isFile);
-
-        if (file.content == null) {
-            file.content = content;
-        } else {
-            file.content += content;
-        }
+        addFile(filePath, content);
     }
 
     public String readContentFromFile(String filePath) {
-        Node node = root;
+        Directory directory = root;
         StringTokenizer tokenizer = new StringTokenizer(filePath, "/");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            Node child = node.children.get(token);
+            Directory child = directory.children.get(token);
             if (child != null) {
-                node = child;
+                directory = child;
             } else {
-                return null;
+                return directory.files.getOrDefault(token, null);
             }
         }
-        if (node.isDir) return null;
-        return node.content;
+        return null;
     }
 
-    private Node addEntry(String path, boolean isDirectory) {
-        Node node = root;
+    private void addFile(String path, String content) {
+        addEntry(path, (fileName, dir) -> {
+            dir.files.merge(fileName, content, (a, b) -> a + b);
+            return dir;
+        });
+    }
 
+    private void addDirectory(String path) {
+        addEntry(path, (directoryName, dir) -> {
+            Directory d = new Directory();
+            d.name = directoryName;
+            dir.children.put(directoryName, d);
+            return d;
+        });
+    }
+
+    private void addEntry(String path, BiFunction<String, Directory, Directory> add) {
+        Directory directory = root;
         StringTokenizer tokenizer = new StringTokenizer(path, "/");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            Node child = node.children.get(token);
+            Directory child = directory.children.get(token);
             if (child != null) {
-                node = child;
+                directory = child;
             } else {
-                Node newNode = isDirectory ? Node.newDirectory() : Node.newFile();
-                newNode.name = token;
-
-                node.children.put(token, newNode);
-                node = newNode;
+                directory = add.apply(token, directory);
             }
         }
-
-        return node;
     }
 }

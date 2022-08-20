@@ -49,6 +49,12 @@ class FileSystemTest {
     }
 
     @Test
+    void ls_show_only_the_file() {
+        fs.addContentToFile("/a", "hello");
+        assertThat(fs.ls("/a")).containsExactly("a");
+    }
+
+    @Test
     @DisplayName("should return subdirectories only for directory in between")
     void ls_mkdir_ls() {
         assertThat(fs.ls("/")).isEqualTo(emptyList());
@@ -104,5 +110,19 @@ class FileSystemTest {
         fs.addContentToFile("/a/b/e", " folks");
 
         assertThat(fs.readContentFromFile("/a/b/e")).isEqualTo("hello world folks");
+    }
+
+    @Test
+    void anotherTest() {
+        fs.mkdir("/m");
+        assertThat(fs.ls("/m")).isEqualTo(emptyList());
+        fs.mkdir("/w");
+        assertThat(fs.ls("/")).containsExactly("m", "w");
+        assertThat(fs.ls("/w")).isEqualTo(emptyList());
+        assertThat(fs.ls("/")).containsExactly("m", "w");
+        fs.addContentToFile("/dycete", "emer");
+        assertThat(fs.ls("/w")).isEqualTo(emptyList());
+        assertThat(fs.ls("/")).containsExactly("dycete", "m", "w");
+        assertThat(fs.ls("/dycete")).containsExactly("dycete");
     }
 }
