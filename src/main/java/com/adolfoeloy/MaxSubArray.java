@@ -3,13 +3,14 @@ package com.adolfoeloy;
 public class MaxSubArray {
 
     public int maxSubArray(int[] nums) {
-        int currentSubarray = nums[0];
-        int maxSubArray = nums[0];
-        for (int i=1; i<nums.length; i++) {
-            currentSubarray = (currentSubarray < 0) ? nums[i] : currentSubarray + nums[i];
-            maxSubArray = Integer.max(currentSubarray, maxSubArray);
+        int ans = nums[0];  // ans stands for answer (max subarray)
+        int a = ans;        // a is the current subarray sum
+        for (int i : nums) {
+            int n = nums[i];
+            a = Integer.max(n, n + a);
+            ans = Integer.max(a, ans);
         }
-        return maxSubArray;
+        return ans;
     }
 
 }
