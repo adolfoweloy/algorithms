@@ -3,20 +3,18 @@ package com.adolfoeloy;
 public class MaxSubArray {
 
     public int maxSubArray(int[] nums) {
-        if (nums.length == 1) return nums[0];
-
-        int max = Integer.MIN_VALUE;
-        for (int k=0; k < nums.length; k++) {
-            for (int i=k; i < nums.length; i++) {
-                int sum=0;
-                for (int j=k; j<=i; j++) {
-                    sum+=nums[j];
-                }
-                max = Integer.max(max, sum);
+        int maxSubArray = Integer.MIN_VALUE;
+        for (int i=0; i < nums.length; i++) {
+            int currentSubArray = 0;
+            for (int j = i; j < nums.length; j++) {
+                // adding the number at each iteration and creating comparing it at each iteration
+                // is the trick to avoid N^3. With this trick there's no need for a third nested for.
+                currentSubArray += nums[j];
+                maxSubArray = Integer.max(maxSubArray, currentSubArray);
             }
         }
 
-        return max;
+        return maxSubArray;
     }
 
 }
