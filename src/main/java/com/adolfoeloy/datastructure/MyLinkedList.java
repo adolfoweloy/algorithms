@@ -52,7 +52,7 @@ public class MyLinkedList {
     public List<Integer> toArrayList() {
         ListNode node = head.next;
         List<Integer> list = new ArrayList<>();
-        while (node != null) {
+        for (int i = 0; i < size; i++) {
             list.add(node.val);
             node = node.next;
         }
