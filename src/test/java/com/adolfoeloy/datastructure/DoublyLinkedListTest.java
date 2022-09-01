@@ -9,9 +9,9 @@ class DoublyLinkedListTest {
     @Test
     void shouldWork() {
         DoublyLinkedList list = new DoublyLinkedList();
-        DoublyLinkedList.NodeValue node1 = list.addFront(10);
-        DoublyLinkedList.NodeValue node2 = list.addFront(20);
-        DoublyLinkedList.NodeValue node3 = list.addFront(30);
+        ListNode node1 = list.addFront(10);
+        ListNode node2 = list.addFront(20);
+        ListNode node3 = list.addFront(30);
 
         assertEquals(3, list.size());
         assertEquals(node3.next, node2);

@@ -4,11 +4,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MyLinkedListTest {
+class LinkedListTest {
 
-    private MyLinkedList list = new MyLinkedList();;
+    private final LinkedList list = new LinkedList();
 
     @Test
     @DisplayName("should be able to add an element to an empty list")
@@ -16,7 +17,7 @@ class MyLinkedListTest {
         list.addAtHead(1);
 
         assertThat(list.size()).isEqualTo(1);
-        assertThat(list.toArrayList()).isEqualTo(asList(1));
+        assertThat(list.toArrayList()).isEqualTo(singletonList(1));
     }
 
     @Test

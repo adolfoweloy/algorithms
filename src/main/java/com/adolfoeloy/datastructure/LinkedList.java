@@ -3,7 +3,7 @@ package com.adolfoeloy.datastructure;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyLinkedList {
+public class LinkedList {
     private final ListNode head = new ListNode(0);
     private int size = 0;
 
