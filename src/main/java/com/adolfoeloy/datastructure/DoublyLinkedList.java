@@ -3,39 +3,75 @@ package com.adolfoeloy.datastructure;
 public class DoublyLinkedList {
     private final ListNode head = new ListNode(0);
     private final ListNode tail = new ListNode(0);
+    private int size = 0;
 
-    private int size;
-
-    public DoublyLinkedList() {
+    DoublyLinkedList() {
         head.next = tail;
         tail.prev = head;
     }
 
-    public ListNode addFront(int value) {
-        ListNode node = new ListNode(value);
+    public void addAtHead(int val) {
+        ListNode newNode = new ListNode(val);
 
-        head.next.prev = node;
-        node.next = head.next;
-        node.prev = head;
-        head.next = node;
-
+        newNode.next = head.next;
+        head.next.prev = newNode;
+        head.next = newNode;
         size++;
-        return node;
     }
 
-    public void remove(ListNode node) {
-        if (size == 0) throw new IllegalStateException("Empty list");
+    public void addAtTail(int val) {
+        ListNode newNode = new ListNode(val);
 
-        ListNode next = node.next;
-        ListNode prev = node.prev;
+        newNode.next = tail;
+        newNode.prev = tail.prev;
+        tail.prev.next = newNode;
+        tail.prev = newNode;
 
-        next.prev = prev;
-        prev.next = next;
+        size++;
+    }
+
+    public void addAtIndex(int index, int val) {
+        if (index < 0 || index > size) return;
+
+        ListNode node = head;
+        for (int i = 0; i <= index; i++) node = node.next;
+
+        ListNode newNode = new ListNode(val);
+
+        newNode.next = node;
+        newNode.prev = node.prev;
+        node.prev.next = newNode;
+        node.prev = newNode;
+
+        size++;
+    }
+
+    public int get(int index) {
+        if (size == 0 || index < 0 || index >= size) return -1;
+        ListNode node = head;
+        for (int i = 0; i <= index; i++) node = node.next;
+        return node.val;
+    }
+
+    public void deleteAtIndex(int index) {
+        if (index < 0 || index >= size) return;
+        ListNode toDelete = head;
+        for (int i = 0; i <= index; i++) toDelete = toDelete.next;
+
+        toDelete.prev.next = toDelete.next;
+        toDelete.next.prev = toDelete.prev;
+
+        toDelete.next = null;
+        toDelete.prev = null;
 
         size--;
     }
 
     public int size() {
         return size;
+    }
+
+    public ListNode getHead() {
+        return head;
     }
 }

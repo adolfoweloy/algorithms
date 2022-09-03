@@ -1,8 +1,5 @@
 package com.adolfoeloy.datastructure;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LinkedList {
     private final ListNode head = new ListNode(0);
     private int size = 0;
@@ -20,10 +17,7 @@ public class LinkedList {
 
     public void addAtIndex(int index, int val) {
         if (index < 0 || index > size) return;
-
-        ListNode n = head;
-        for (int i=0; i<index; i++) n = n.next;
-
+        ListNode n = getNodeBefore(index);
         ListNode newNode = new ListNode(val);
         newNode.next = n.next;
         n.next = newNode;
@@ -49,17 +43,11 @@ public class LinkedList {
         return n;
     }
 
-    public List<Integer> toArrayList() {
-        ListNode node = head.next;
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            list.add(node.val);
-            node = node.next;
-        }
-        return list;
-    }
-
     public int size() {
         return size;
+    }
+
+    public ListNode getHead() {
+        return head;
     }
 }
