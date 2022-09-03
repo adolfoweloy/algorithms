@@ -8,7 +8,7 @@ import java.util.List;
 public class LinkedListUtil {
 
     public static List<Integer> toArrayList(ListNode head, int size) {
-        ListNode node = head.next;
+        ListNode node = head;
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             list.add(node.val);

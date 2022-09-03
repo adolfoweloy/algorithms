@@ -18,7 +18,7 @@ class LinkedListTest {
         list.addAtHead(1);
 
         assertThat(list.size()).isEqualTo(1);
-        assertThat(toArrayList(list.getHead(), 1)).isEqualTo(singletonList(1));
+        assertThat(toArrayList(list.getHead().next, 1)).isEqualTo(singletonList(1));
     }
 
     @Test
@@ -28,7 +28,7 @@ class LinkedListTest {
         list.addAtHead(2);
 
         assertThat(list.size()).isEqualTo(2);
-        assertThat(toArrayList(list.getHead(), 2)).isEqualTo(asList(2, 1));
+        assertThat(toArrayList(list.getHead().next, 2)).isEqualTo(asList(2, 1));
     }
 
     @Test
@@ -38,7 +38,7 @@ class LinkedListTest {
         list.addAtTail(2);
 
         assertThat(list.size()).isEqualTo(2);
-        assertThat(toArrayList(list.getHead(), 2)).isEqualTo(asList(1, 2));
+        assertThat(toArrayList(list.getHead().next, 2)).isEqualTo(asList(1, 2));
     }
 
     @Test
