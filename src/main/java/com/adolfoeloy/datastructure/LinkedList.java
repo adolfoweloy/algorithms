@@ -37,6 +37,25 @@ public class LinkedList {
         size--;
     }
 
+    public ListNode deleteWhenValueIs(int val) {
+        ListNode h = new ListNode(-1);
+        ListNode node = head;
+        h.next = node;
+        ListNode prev = h;
+
+        while (node != null) {
+            if (node.val == val) {
+                prev.next = node.next;
+                size--;
+            } else {
+                prev = prev.next;
+            }
+            node = node.next;
+        }
+
+        return head;
+    }
+
     private ListNode getNodeBefore(int index) {
         ListNode n = head;
         for (int i = 0; i < index; i++) n = n.next;

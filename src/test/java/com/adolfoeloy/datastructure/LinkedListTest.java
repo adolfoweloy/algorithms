@@ -77,7 +77,7 @@ class LinkedListTest {
 
     @Test
     @DisplayName("should delete at index")
-    void testCase6() {
+    void testCaseDelete1() {
         list.addAtHead(3);
         list.addAtTail(4);
         list.addAtTail(1);
@@ -90,6 +90,36 @@ class LinkedListTest {
         assertThat(list.get(0)).isEqualTo(3);
         assertThat(list.get(1)).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("should delete when the value is 4")
+    void testCaseDelete2() {
+        list.addAtHead(3);
+        list.addAtTail(4);
+        list.addAtTail(1);
+
+        assertThat(list.size()).isEqualTo(3);
+
+        list.deleteWhenValueIs(4);
+        assertThat(list.size()).isEqualTo(2);
+
+        assertThat(list.get(0)).isEqualTo(3);
+        assertThat(list.get(1)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("should delete when the value is equal to all values in the array")
+    void testCaseDelete3() {
+        list.addAtHead(7);
+        list.addAtTail(7);
+        list.addAtTail(7);
+
+        assertThat(list.size()).isEqualTo(3);
+
+        list.deleteWhenValueIs(7);
+        assertThat(list.size()).isEqualTo(0);
+    }
+
 
     @Test
     @DisplayName("add at index after adding at head")
