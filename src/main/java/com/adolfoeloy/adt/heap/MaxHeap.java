@@ -1,9 +1,9 @@
-package com.adolfoeloy.datastructure;
+package com.adolfoeloy.adt.heap;
 
 /**
  * MaxHeap implementation backed by an array of Integers that is resizable.
  */
-public class MaxHeap<T extends Comparable<T>> {
+public class MaxHeap<T extends Comparable<T>> implements Heap<T> {
     private T[] heap;
     private int size;
 
@@ -13,6 +13,7 @@ public class MaxHeap<T extends Comparable<T>> {
         size = 0;
     }
 
+    @Override
     public void add(T entry) {
         if (size == heap.length) {
             resize(size * 2);
@@ -27,8 +28,9 @@ public class MaxHeap<T extends Comparable<T>> {
         size++;
     }
 
-    public T remove() {
-        if (size == heap.length) {
+    @Override
+    public T pop() {
+        if (size == 0) {
             throw new  IllegalStateException("Heap is empty");
         }
 
@@ -45,6 +47,17 @@ public class MaxHeap<T extends Comparable<T>> {
         }
 
         return entry;
+    }
+
+    @Override
+    public T peek() {
+        if (size != 0) return heap[first()];
+        throw new IllegalStateException("Heap is empty");
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     private int first() {
@@ -97,7 +110,8 @@ public class MaxHeap<T extends Comparable<T>> {
     }
 
     // Visible for testing
-    T[] getHeap() {
+    @Override
+    public T[] getHeap() {
         return heap;
     }
 }
