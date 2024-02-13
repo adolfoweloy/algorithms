@@ -3,11 +3,11 @@ package com.adolfoeloy.adt.heap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class MinHeapTest {
+class MinHeapOldTest {
 
     @Test
     void add__should_add_numbers_in_min_order_without_resizing() {
-        Heap<Integer> heap = new MinHeap<>(4);
+        Heap<Integer> heap = new MinHeapOld<>(4);
         heap.add(10);
         heap.add(5);
         heap.add(20);
@@ -18,7 +18,7 @@ class MinHeapTest {
 
     @Test
     void add__should_add_numbers_in_min_order_resizing() {
-        Heap<Integer> heap = new MinHeap<>(4);
+        Heap<Integer> heap = new MinHeapOld<>(4);
         heap.add(10);
         heap.add(5);
         heap.add(20);
@@ -30,7 +30,7 @@ class MinHeapTest {
 
     @Test
     void remove__should_return_min_element_without_resizing() {
-        Heap<Integer> heap = new MinHeap<>(4);
+        Heap<Integer> heap = new MinHeapOld<>(4);
         heap.add(10);
         heap.add(5);
         heap.add(20);
@@ -51,7 +51,7 @@ class MinHeapTest {
 
     @Test
     void remove__should_return_min_element_resizing() {
-        Heap<Integer> heap = new MinHeap<>(4);
+        Heap<Integer> heap = new MinHeapOld<>(4);
         heap.add(10);
         heap.add(5);
         heap.add(20);

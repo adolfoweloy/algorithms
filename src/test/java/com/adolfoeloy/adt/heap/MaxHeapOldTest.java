@@ -3,11 +3,11 @@ package com.adolfoeloy.adt.heap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class MaxHeapTest {
+class MaxHeapOldTest {
 
     @Test
     void add__should_add_numbers_in_max_order() {
-        MaxHeap<Integer> heap = new MaxHeap<>(4);
+        MaxHeapOld<Integer> heap = new MaxHeapOld<>(4);
         heap.add(10);
         heap.add(5);
         heap.add(20);
@@ -19,7 +19,7 @@ class MaxHeapTest {
 
     @Test
     void remove__should_return_max_element() {
-        MaxHeap<Integer> heap = new MaxHeap<>(4);
+        MaxHeapOld<Integer> heap = new MaxHeapOld<>(4);
         heap.add(10);
         heap.add(5);
         heap.add(20);

@@ -1,13 +1,13 @@
 package com.adolfoeloy.adt.heap;
 
-public class MinHeap<T extends Comparable<T>> implements Heap<T> {
+public class MinHeapOld<T extends Comparable<T>> implements Heap<T> {
     private T[] heap;
     private int capacity;
     private int size = 0;
     private final HeapUtil<T> heapUtil = new HeapUtil<>();
 
     @SuppressWarnings("unchecked")
-    public MinHeap(int capacity) {
+    public MinHeapOld(int capacity) {
         heap = (T[]) new Comparable[capacity + 1];
         this.capacity = capacity;
     }

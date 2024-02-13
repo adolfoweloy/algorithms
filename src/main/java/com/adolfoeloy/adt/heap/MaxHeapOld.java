@@ -3,12 +3,12 @@ package com.adolfoeloy.adt.heap;
 /**
  * MaxHeap implementation backed by an array of Integers that is resizable.
  */
-public class MaxHeap<T extends Comparable<T>> implements Heap<T> {
+public class MaxHeapOld<T extends Comparable<T>> implements Heap<T> {
     private T[] heap;
     private int size;
 
     @SuppressWarnings("unchecked")
-    MaxHeap(int capacity) {
+    MaxHeapOld(int capacity) {
         heap = (T[]) new Comparable[capacity];
         size = 0;
     }
