@@ -6,16 +6,22 @@ package com.adolfoeloy.datastructure;
  */
 public interface IntHeap {
 
+    /**
+     * Adds an element in time complexity of O(log N).
+     * @param value integer to be added
+     */
     void add(int value);
 
     /**
      * Remove and returns the top element of the heap.
+     * Time complexity of O(log N)
      * @return the top element
      */
     int poll();
 
     /**
      * Returns the value of the top element without removing it from the heap.
+     * Time complexity of O(1)
      * @see IntHeap#poll()
      * @return the top element
      */
