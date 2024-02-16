@@ -64,8 +64,10 @@ public class MaxHeap implements IntHeap {
             var parent = (index / 2);
             if (heap[parent] < heap[index]) {
                 swap(index, parent);
+                index = parent;
+            } else {
+                break;
             }
-            index = parent;
         }
     }
 
