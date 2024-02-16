@@ -7,15 +7,12 @@ public class MaxHeap implements IntHeap {
     private final int[] heap;
 
     MaxHeap(int maxSize) {
-        size = 0;
         heap = new int[maxSize + 1];
     }
 
-    MaxHeap(int[] array) {
-        heap = new int[array.length + 1];
-        for (int i=0; i<array.length; i++) {
-            add(array[i]);
-        }
+    MaxHeap(int[] input) {
+        heap = new int[input.length + 1];
+        Arrays.stream(input).forEach(this::add);
     }
 
     @Override
@@ -41,28 +38,22 @@ public class MaxHeap implements IntHeap {
             throw new IllegalStateException("Heap is empty");
         }
 
-        // save the value from the top of the heap
         var max = heap[1];
-
-        // copy the latest value to the top of the heap
         heap[1] = heap[size];
         heap[size] = 0;
         size--;
 
         var index = 1;
-
-        // sink the value at the top to keep the heap consistent
         sink(index);
 
-        // returns the value that was at the top of the heap
         return max;
     }
 
     // running time to swim up values is O(log N)
     private void swim(int index) {
         while (index > 1) {
-            var parent = (index / 2);
-            if (heap[parent] < heap[index]) {
+            var parent = index / 2;
+            if (heap[index] > heap[parent]) {
                 swap(index, parent);
                 index = parent;
             } else {
@@ -75,20 +66,24 @@ public class MaxHeap implements IntHeap {
         while (index <= size / 2) {
             var left = index * 2;
             var right = index * 2 + 1;
-            if (heap[index] < heap[left] || heap[index] < heap[right]) {
-                var idxLarger = indexOfMaxBetween(left, right);
-                swap(index, idxLarger);
-                index = idxLarger;
-            } else{
+            if (right < size) {
+                var maxIndex = indexOfMaxBetween(left, right);
+                swap(index, maxIndex);
+                index = maxIndex;
+            } else {
+                if (heap[index] < heap[left]) {
+                    swap(index, left);
+                }
                 index = left;
             }
         }
     }
 
     private int indexOfMaxBetween(int i, int j) {
-        if (heap[i] > heap[j]) return i;
-        if (heap[i] < heap[j]) return j;
-        return i;
+        if (heap[i] >= heap[j]) {
+            return i;
+        }
+        return j;
     }
 
     private void swap(int index, int parent) {

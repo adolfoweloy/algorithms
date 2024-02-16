@@ -7,12 +7,10 @@ public class MinHeap implements IntHeap {
     private final int[] heap;
 
     public MinHeap(int maxSize) {
-        size = 0;
         heap = new int[maxSize + 1];
     }
 
     public MinHeap(int[] input) {
-        size = 0;
         heap = new int[input.length + 1];
         Arrays.stream(input).forEach(this::add);
     }
@@ -54,15 +52,25 @@ public class MinHeap implements IntHeap {
         return heap[1];
     }
 
+    private void swim(int index) {
+        while (index > 0) {
+            var parent = index / 2;
+            if (heap[index] < heap[parent]) {
+                swap(index, parent);
+                index = parent;
+            } else {
+                break;
+            }
+        }
+    }
+
     private void sink(int index) {
         while (index <= size / 2) {
             var left = index * 2;
             var right = index * 2 + 1;
-            if (right < size && left < size) {
+            if (right < size) {
                 var minIndex = minIndexBetween(left, right);
-                if (heap[index] > heap[minIndex]) {
-                    swap(index, minIndex);
-                }
+                swap(index, minIndex);
                 index = minIndex;
             } else {
                 if (heap[index] > heap[left]) {
@@ -78,18 +86,6 @@ public class MinHeap implements IntHeap {
             return i;
         }
         return j;
-    }
-
-    private void swim(int index) {
-        while (index > 0) {
-            var parent = index / 2;
-            if (heap[index] < heap[parent]) {
-                swap(index, parent);
-                index = parent;
-            } else {
-                break;
-            }
-        }
     }
 
     private void swap(int index, int parent) {
