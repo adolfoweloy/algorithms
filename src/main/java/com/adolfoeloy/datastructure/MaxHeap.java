@@ -11,6 +11,13 @@ public class MaxHeap implements IntHeap {
         heap = new int[maxSize + 1];
     }
 
+    MaxHeap(int[] array) {
+        heap = new int[array.length + 1];
+        for (int i=0; i<array.length; i++) {
+            add(array[i]);
+        }
+    }
+
     @Override
     public void add(int value) {
         if (size + 1 == heap.length) {
@@ -25,18 +32,7 @@ public class MaxHeap implements IntHeap {
         heap[latestPos] = value;
 
         // now bubble the value up to keep the heap consistent
-        var index = latestPos;
-
-        // running time to swim up values is O(log N)
-        while (index > 1) {
-            var parent = (index / 2);
-            if (heap[parent] < heap[index]) {
-                // swap values
-                swap(index, parent);
-            }
-
-            index = parent;
-        }
+        swim(latestPos);
     }
 
     @Override
@@ -54,7 +50,26 @@ public class MaxHeap implements IntHeap {
         size--;
 
         var index = 1;
+
         // sink the value at the top to keep the heap consistent
+        sink(index);
+
+        // returns the value that was at the top of the heap
+        return max;
+    }
+
+    // running time to swim up values is O(log N)
+    private void swim(int index) {
+        while (index > 1) {
+            var parent = (index / 2);
+            if (heap[parent] < heap[index]) {
+                swap(index, parent);
+            }
+            index = parent;
+        }
+    }
+
+    private void sink(int index) {
         while (index <= size / 2) {
             var left = index * 2;
             var right = index * 2 + 1;
@@ -66,9 +81,6 @@ public class MaxHeap implements IntHeap {
                 index = left;
             }
         }
-
-        // returns the value that was at the top of the heap
-        return max;
     }
 
     private int indexOfMaxBetween(int i, int j) {
