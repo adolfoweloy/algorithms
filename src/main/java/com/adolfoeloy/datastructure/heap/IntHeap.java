@@ -1,4 +1,4 @@
-package com.adolfoeloy.datastructure;
+package com.adolfoeloy.datastructure.heap;
 
 /**
  * For the purposes of practicing, I don't want to create a full-fledged generic heap,
