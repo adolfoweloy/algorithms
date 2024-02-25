@@ -1,37 +1,46 @@
 package com.adolfoeloy.disjointset;
 
+/**
+ * Initialise = O(N)
+ * Union      = O(N)
+ * Find       = O(1)
+ * Notes: N union commands on N objects, will take O(N^2) time. Unacceptable!
+ */
 public class QuickFind implements UnionFind {
-    private final int[] root;
+    private final int[] id;
 
     QuickFind(int n) {
-        root = new int[n];
+        id = new int[n];
         for (int i = 0; i < n; i++) {
-            root[i] = i;
+            id[i] = i;
         }
     }
 
     @Override
     public int find(int n) {
-        return root[n];
+        return id[n];
     }
 
     @Override
-    public void union(int a, int b) {
-        var r = root[b];
+    public void union(int p, int q) {
+        var pid = id[p];
+        var qid = id[q];
+
         // if both are connected, return
-        if (root[a] == root[b]) return;
+        if (pid == qid) return;
 
         // quick find can find connections at O(1) time
-        // however the connect is be O(N) since there's the need to go through all elements of root.
-        for (int i = 0; i < root.length; i++) {
-            if (root[i] == r) {
-                root[i] = root[a];
+        // however the union operation is O(N) since there's the need to go through all elements of root.
+        // every node that is connected with B will now be connected to A
+        for (int i = 0; i < id.length; i++) {
+            if (id[i] == pid) {
+                id[i] = qid;
             }
         }
     }
 
     @Override
     public boolean isConnected(int a, int b) {
-        return find(a) == find(b);
+        return id[a] == id[b];
     }
 }

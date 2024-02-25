@@ -6,9 +6,9 @@ public interface UnionFind {
     int find(int n);
 
     // connects a and b
-    void union(int a, int b);
+    void union(int q, int p);
 
     // checks if a is connected with b
-    boolean isConnected(int a, int b);
+    boolean isConnected(int q, int p);
 
 }
