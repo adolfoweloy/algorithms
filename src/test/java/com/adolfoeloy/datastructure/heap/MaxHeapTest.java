@@ -123,4 +123,13 @@ class MaxHeapTest {
 
         assertThat(heap.asArray()).containsExactly(5, 4, 3, 1, 2);
     }
+
+    @Test
+    void sortedArray__should_return_heapSort_from_heap() {
+        var heap = new MaxHeap(new int[] {2,5,9,3,1});
+
+        var sortedArray = heap.heapSort();
+
+        assertThat(sortedArray).containsExactly(1,2,3,5,9);
+    }
 }
