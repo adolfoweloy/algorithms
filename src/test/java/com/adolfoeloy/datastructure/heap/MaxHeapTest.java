@@ -121,6 +121,6 @@ class MaxHeapTest {
     void construct__should_fully_heapify_a_given_array() {
         var heap = new MaxHeap(new int[] {1, 2, 3, 4, 5});
 
-        assertThat(heap.asArray()).containsExactly(5, 4, 2, 1, 3);
+        assertThat(heap.asArray()).containsExactly(5, 4, 3, 1, 2);
     }
 }

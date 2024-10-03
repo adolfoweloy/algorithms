@@ -10,8 +10,12 @@ public class MaxHeap implements IntHeap {
 
     public MaxHeap(int[] items) {
         heap = new int[items.length + 1];
-        for (int item: items) {
-            add(item);
+        size = items.length;
+        System.arraycopy(items, 0, heap, 1, items.length);
+        // build heap using bottom-up method
+        // size/2 because I don't need to perform sink operation on leaf nodes.
+        for (int k = size/2; k >= 1; k--) {
+            sink(k);
         }
     }
 
