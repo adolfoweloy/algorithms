@@ -64,11 +64,29 @@ class MaxHeapTest {
         var heap = new MaxHeap(5);
         IntStream.of(5, 9, 4, 10, 7).forEach(heap::add);
 
+        assertThat(heap.asArray()).containsExactly(10, 9, 4, 5, 7);
+
+
         assertThat(heap.poll()).isEqualTo(10);
         assertThat(heap.poll()).isEqualTo(9);
         assertThat(heap.poll()).isEqualTo(7);
         assertThat(heap.poll()).isEqualTo(5);
         assertThat(heap.poll()).isEqualTo(4);
+
+        assertThat(heap.asArray()).isEmpty();
+    }
+
+    @Test
+    void poll__should_not_compare_elements_outside_of_the_heap_boundaries() {
+        var heap = new MaxHeap(3);
+        IntStream.of(-5, -9, -4).forEach(heap::add);
+
+        // this will force comparison between 0 on the left side with 0 on the right side
+        assertThat(heap.asArray()).containsExactly(-4, -9, -5);
+
+        assertThat(heap.poll()).isEqualTo(-4);
+        assertThat(heap.poll()).isEqualTo(-5);
+        assertThat(heap.poll()).isEqualTo(-9);
 
         assertThat(heap.asArray()).isEmpty();
     }
