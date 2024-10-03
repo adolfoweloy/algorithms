@@ -1,4 +1,4 @@
-package com.adolfoeloy.datastructure;
+package com.adolfoeloy.datastructure.queue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

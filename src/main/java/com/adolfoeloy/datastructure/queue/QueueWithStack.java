@@ -1,4 +1,4 @@
-package com.adolfoeloy.datastructure;
+package com.adolfoeloy.datastructure.queue;
 
 import java.util.Stack;
 
