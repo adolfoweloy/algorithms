@@ -6,5 +6,8 @@ By no means, this is an intention to reinvent the wheel. I use and recommend usi
 This is all for practicing purposes.
 
 ## Data Structures
+
+Some fundamental data-structures:
 - [Stack](src/main/java/com/adolfoeloy/datastructure/stack)
+- [Queue](src/main/java/com/adolfoeloy/datastructure/queue)
 - [Binary heap](src/main/java/com/adolfoeloy/datastructure/heap)
