@@ -13,7 +13,7 @@ public class TopKMostFrequent {
         }
 
         // build the heap O(N log(k)) where k is the number of keys
-        PriorityQueue<Integer> pq = new PriorityQueue<>((k1, k2) -> frequency.get(k2) - frequency.get(k1));
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> frequency.get(b) - frequency.get(a));
         pq.addAll(frequency.keySet());
 
         // build the response (O(k log k)) where k here is associated with the variable k

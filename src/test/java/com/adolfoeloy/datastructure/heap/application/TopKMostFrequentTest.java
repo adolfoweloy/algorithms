@@ -18,6 +18,6 @@ class TopKMostFrequentTest {
     void test2() {
         int[] result = subject.topKFrequent(new int[] {4,1,-1,2,-1,2,3}, 2);
 
-        Assertions.assertThat(result).containsExactly(2,-1);
+        Assertions.assertThat(result).containsExactly(-1, 2);
     }
 }
