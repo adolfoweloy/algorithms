@@ -7,21 +7,17 @@ import java.util.Arrays;
  * values already computed.
  */
 public class FibonacciMemoization {
-
     public int f(int n) {
         int[] memo = new int[n+1];
         Arrays.fill(memo, -1);
-        return _f(n, memo);
+        return _f(memo, n);
     }
 
-    private int _f(int n, int[] memo) {
-        if (n == 0 || n == 1) return n;
-
+    private int _f(int[] memo, int n) {
+        if (n < 2) return n;
         if (memo[n] == -1) {
-            memo[n] = _f(n-1, memo) + _f(n-2, memo);
+            memo[n] = _f(memo, n-2) + _f(memo, n-1);
         }
-
         return memo[n];
     }
-
 }
