@@ -1,4 +1,4 @@
-package com.adolfoeloy.dpstudy;
+package com.adolfoeloy.arrays;
 
 import java.util.Arrays;
 
@@ -24,6 +24,9 @@ public class MaxSubArray {
         return max;
     }
 
+    /**
+     * Just an exercise to actually return the max sub-array.
+     */
     public int[] getMaxSubArray(int[] nums) {
         int currSum = nums[0];
         int currMax = nums[0];

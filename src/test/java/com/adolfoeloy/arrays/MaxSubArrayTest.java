@@ -1,4 +1,4 @@
-package com.adolfoeloy.dpstudy;
+package com.adolfoeloy.arrays;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
