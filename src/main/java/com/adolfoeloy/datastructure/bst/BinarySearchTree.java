@@ -7,7 +7,10 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         root = put(root, key, value);
     }
 
-    // time complexity O(1 + depth of the tree)
+    // time complexity average path when keys come in random order O(~2 + ln N)
+    // if keys come in order, or in natural order, that leads the data-structure to the worst case
+    // where all keys are added to the left or all added to the right leading search operations to O(N).
+    // if the tree was balanced, this could be achieved in O(log n)
     private TreeNode<Key, Value> put(TreeNode<Key, Value> node, Key key, Value value) {
         if (node == null) return new TreeNode<>(key, value);
         var cmp = key.compareTo(node.getKey());
