@@ -1,5 +1,7 @@
 package com.adolfoeloy.datastructure.bst;
 
+import java.util.PriorityQueue;
+
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private TreeNode<Key, Value> root;
 
@@ -52,7 +54,15 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     public Iterable<Key> iterator() {
-        // TODO
-        return null;
+        PriorityQueue<Key> queue = new PriorityQueue<>();
+        inorder(queue, root);
+        return queue;
+    }
+
+    private void inorder(PriorityQueue<Key> queue, TreeNode<Key, Value> node) {
+        if (node == null) return;
+        inorder(queue, node.getLeft());
+        queue.add(node.getKey());
+        inorder(queue, node.getRight());
     }
 }
