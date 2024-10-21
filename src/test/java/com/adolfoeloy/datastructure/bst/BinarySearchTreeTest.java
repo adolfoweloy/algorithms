@@ -40,8 +40,64 @@ class BinarySearchTreeTest {
         subject.put(2, "Janine");
         subject.put(10, "Isaac");
 
-        Assertions.assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.iterator()).containsExactly(
                 1, 2, 10, 12
         );
+    }
+
+    @Test
+    @DisplayName("Delete min where min has no child on the right")
+    void test3() {
+        subject.put(3, "Adolfo");
+        subject.put(2, "Hannah");
+        subject.put(4, "Janine");
+        subject.put(10, "Isaac");
+        assertThat(subject.size()).isEqualTo(4);
+
+        subject.deleteMin();
+
+        assertThat(subject.size()).isEqualTo(3);
+        assertThat(subject.iterator()).containsExactly(
+                3, 4, 10
+        );
+    }
+
+    @Test
+    @DisplayName("Delete min where min has child on the right")
+    void test4() {
+        subject.put(30, "Adolfo");
+        subject.put(20, "Hannah");
+        subject.put(40, "Janine");
+        subject.put(25, "Isaac");
+        assertThat(subject.size()).isEqualTo(4);
+
+        subject.deleteMin();
+
+        assertThat(subject.size()).isEqualTo(3);
+        assertThat(subject.iterator()).containsExactly(
+                25, 30, 40
+        );
+    }
+
+    @Test
+    @DisplayName("Delete min where the root node has only right child")
+    void test5() {
+        subject.put(30, "Adolfo");
+        subject.put(40, "Janine");
+        assertThat(subject.size()).isEqualTo(2);
+
+        subject.deleteMin();
+
+        assertThat(subject.size()).isEqualTo(1);
+        assertThat(subject.iterator()).containsExactly(
+                40
+        );
+    }
+
+    @Test
+    @DisplayName("Delete min from empty BST should throw exception")
+    void test6() {
+        Assertions.assertThatThrownBy(subject::deleteMin)
+                .isInstanceOf(IllegalStateException.class);
     }
 }

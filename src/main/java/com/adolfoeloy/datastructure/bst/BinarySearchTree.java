@@ -2,6 +2,11 @@ package com.adolfoeloy.datastructure.bst;
 
 import java.util.PriorityQueue;
 
+/**
+ * This Binary search tree (BST) implements a symbol table.
+ * An elementary implementation for symbol tables can be done with linked lists, however BST improves the execution time
+ * for operations in the symbol table.
+ */
 public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private TreeNode<Key, Value> root;
 
@@ -34,7 +39,6 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private int size(TreeNode<Key, Value> node) {
         if (node == null) return 0;
         return node.getCount();
-
     }
 
     // time complexity O(1 + depth of the tree)
@@ -49,8 +53,21 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         return null;
     }
 
+    // implemented with Hibbard's algorithm with time complexity of O(sqrt(N))
     public void delete(Key key) {
         // TODO
+    }
+
+    public void deleteMin() {
+        if (root == null) throw new IllegalStateException("The BST is empty");
+        root = deleteMin(root);
+    }
+
+    private TreeNode<Key, Value> deleteMin(TreeNode<Key, Value> node) {
+        if (node.getLeft() == null) return node.getRight();
+        node.setLeft(deleteMin(node.getLeft()));
+        node.setCount(1 + size(node.getLeft()) + size(node.getRight()));
+        return node;
     }
 
     public Iterable<Key> iterator() {
