@@ -4,46 +4,33 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private TreeNode<Key, Value> root;
 
     public void put(Key key, Value value) {
-        var tmp = root;
-        if (root == null) {
-            root = new TreeNode<>(key, value);
-        } else {
-            insert(tmp, key, value);
-        }
+        root = put(root, key, value);
     }
 
-    private void insert(TreeNode<Key, Value> node, Key key, Value value) {
-        if (key.compareTo(node.getKey()) < 0) {
-            if (node.getLeft() != null) {
-                insert(node.getLeft(), key, value);
-            } else {
-                node.setLeft(new TreeNode<>(key, value));
-            }
-        } else if (key.compareTo(node.getKey()) > 0) {
-            if (node.getRight() != null) {
-                insert(node.getRight(), key, value);
-            } else {
-                node.setRight(new TreeNode<>(key, value));
-            }
+    // time complexity O(1 + depth of the tree)
+    private TreeNode<Key, Value> put(TreeNode<Key, Value> node, Key key, Value value) {
+        if (node == null) return new TreeNode<>(key, value);
+        var cmp = key.compareTo(node.getKey());
+        if (cmp < 0) {
+            node.setLeft(put(node.getLeft(), key, value));
+        } else if (cmp > 0) {
+            node.setRight(put(node.getRight(), key, value));
         } else {
             node.setValue(value);
         }
+        return node;
     }
 
+    // time complexity O(1 + depth of the tree)
     public Value get(Key key) {
         var tmp = root;
-        return search(tmp, key);
-    }
-
-    private Value search(TreeNode<Key, Value> node, Key key) {
-        if (node == null) return null;
-        if (key.compareTo(node.getKey()) < 0) {
-            return search(node.getLeft(), key);
-        } else if (key.compareTo(node.getKey()) > 0) {
-            return search(node.getRight(), key);
-        } else {
-            return node.getValue();
+        while (tmp != null) {
+            var cmp = key.compareTo(tmp.getKey());
+            if (cmp < 0) tmp = tmp.getLeft();
+            else if (cmp > 0) tmp = tmp.getRight();
+            else return tmp.getValue();
         }
+        return null;
     }
 
     public void delete(Key key) {
