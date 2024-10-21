@@ -12,7 +12,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     // where all keys are added to the left or all added to the right leading search operations to O(N).
     // if the tree was balanced, this could be achieved in O(log n)
     private TreeNode<Key, Value> put(TreeNode<Key, Value> node, Key key, Value value) {
-        if (node == null) return new TreeNode<>(key, value);
+        if (node == null) return new TreeNode<>(key, value, 1);
         var cmp = key.compareTo(node.getKey());
         if (cmp < 0) {
             node.setLeft(put(node.getLeft(), key, value));
@@ -21,7 +21,18 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         } else {
             node.setValue(value);
         }
+        node.setCount(1 + size(node.getLeft()) + size(node.getRight()));
         return node;
+    }
+
+    public int size() {
+        return size(root);
+    }
+
+    private int size(TreeNode<Key, Value> node) {
+        if (node == null) return 0;
+        return node.getCount();
+
     }
 
     // time complexity O(1 + depth of the tree)
