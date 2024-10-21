@@ -55,7 +55,34 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
     // implemented with Hibbard's algorithm with time complexity of O(sqrt(N))
     public void delete(Key key) {
-        // TODO
+        root = delete(root, key);
+    }
+
+    private TreeNode<Key, Value> delete(TreeNode<Key, Value> node, Key key) {
+        if (node == null) return null;
+        // first search the key
+        var cmp = key.compareTo(node.getKey());
+        if (cmp < 0) node.setLeft(delete(node.getLeft(), key));
+        else if (cmp > 0) node.setRight(delete(node.getRight(), key));
+        else {
+            // then when the node is found, do the deletion logic
+            if (node.getLeft() == null) return node.getRight();
+            if (node.getRight() == null) return node.getLeft();
+
+            // the node has children
+            var t = min(node.getRight());
+            node.setRight(deleteMin(t.getRight()));
+            node.setLeft(t.getLeft());
+        }
+        node.setCount(1 + size(node.getLeft()) + size(node.getRight()));
+        return node;
+    }
+
+    private TreeNode<Key, Value> min(TreeNode<Key, Value> node) {
+        if (node == null) return null;
+        if (node.getLeft() == null) return node;
+        if (node.getLeft() != null) return min(node.getLeft());
+        return node;
     }
 
     public void deleteMin() {

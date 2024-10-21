@@ -100,4 +100,21 @@ class BinarySearchTreeTest {
         Assertions.assertThatThrownBy(subject::deleteMin)
                 .isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    @DisplayName("Testing deletion by key")
+    void test7() {
+        subject.put(30, "Adolfo");
+        subject.put(20, "Hannah");
+        subject.put(40, "Janine");
+        subject.put(25, "Isaac");
+        assertThat(subject.size()).isEqualTo(4);
+
+        subject.delete(40);
+
+        assertThat(subject.size()).isEqualTo(3);
+        assertThat(subject.iterator()).containsExactly(
+                20, 25, 30
+        );
+    }
 }
