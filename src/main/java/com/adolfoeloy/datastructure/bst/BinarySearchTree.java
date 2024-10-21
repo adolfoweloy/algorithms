@@ -58,6 +58,8 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         root = delete(root, key);
     }
 
+    // if put/delete with random values for long time enough, one will notice that
+    // the structure tends to become unbalanced impacting performance for all other operations.
     private TreeNode<Key, Value> delete(TreeNode<Key, Value> node, Key key) {
         if (node == null) return null;
         // first search the key
@@ -66,11 +68,18 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         else if (cmp > 0) node.setRight(delete(node.getRight(), key));
         else {
             // then when the node is found, do the deletion logic
+            // the two cases below are the easiest ones which are the cases where the node
+            // has only one child.
             if (node.getLeft() == null) return node.getRight();
             if (node.getRight() == null) return node.getLeft();
 
-            // the node has children
-            var t = min(node.getRight());
+            // the trickiest part is when there are two children
+            // find the node t that contains our key
+            var t = node;
+
+            // find the smallest node on the right subtree
+            // delete that node     8
+            node = min(t.getRight());
             node.setRight(deleteMin(t.getRight()));
             node.setLeft(t.getLeft());
         }
