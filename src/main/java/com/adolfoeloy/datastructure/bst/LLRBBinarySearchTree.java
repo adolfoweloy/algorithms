@@ -14,12 +14,31 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
 
     @Override
     public void put(Key key, Value value) {
-        // here is where things change for RB BST
+        root = put(root, key, value);
+    }
+
+    private RBNode<Key, Value> put(RBNode<Key, Value> node, Key key, Value value) {
+        if (node == null) return new RBNode<>(key, value, 1);
+        var cmp = key.compareTo(node.key);
+        if (cmp < 0) {
+            node.left = put(node.left, key, value);
+        } else if (cmp > 0) {
+            node.right = put(node.right, key, value);
+        } else {
+            node.value = value;
+        }
+        node.count = 1 + size(node.left) + size(node.right);
+        return node;
     }
 
     @Override
     public int size() {
         return (root == null) ? 0 : root.count;
+    }
+
+    private int size(RBNode<Key, Value> node) {
+        if (node == null) return 0;
+        return node.count;
     }
 
     @Override
@@ -52,11 +71,13 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
 
             var t = n;
 
-            n = min(t);
+            n = min(t.right);
             n.right = deleteMin(t.right);
             n.left = t.left;
+
         }
 
+        n.count = 1 + size(n.left) + size(n.right);
         return n;
     }
 
@@ -75,6 +96,7 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
     private RBNode<Key, Value> deleteMin(RBNode<Key, Value> n) {
         if (n.left == null) return n.right;
         n.left = deleteMin(n.left);
+        n.count = 1 + size(n.left) + size(n.right);
         return n;
     }
 
@@ -99,6 +121,12 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
         private int count;
         private RBNode<Key, Value> left;
         private RBNode<Key, Value> right;
+
+        RBNode(Key key, Value value,  int count) {
+            this.key = key;
+            this.value = value;
+            this.count = count;
+        }
 
         boolean isRed() {
             return color == Color.RED;
