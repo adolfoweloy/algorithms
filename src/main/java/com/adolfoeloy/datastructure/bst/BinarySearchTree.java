@@ -94,10 +94,10 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST
     private TreeNode<Key, Value> min(TreeNode<Key, Value> node) {
         if (node == null) return null;
         if (node.getLeft() == null) return node;
-        if (node.getLeft() != null) return min(node.getLeft());
-        return node;
+        return min(node.getLeft());
     }
 
+    @Override
     public void deleteMin() {
         if (root == null) throw new IllegalStateException("The BST is empty");
         root = deleteMin(root);

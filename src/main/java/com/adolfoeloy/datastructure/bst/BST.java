@@ -9,5 +9,7 @@ public interface BST<Key extends Comparable<Key>, Value> {
 
     void delete(Key key);
 
+    void deleteMin();
+
     Iterable<Key> iterator();
 }

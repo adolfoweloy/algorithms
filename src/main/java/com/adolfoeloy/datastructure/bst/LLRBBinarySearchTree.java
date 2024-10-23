@@ -37,8 +37,45 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
 
     @Override
     public void delete(Key key) {
-        // hibbard deletion is not easy /o\
+        root = delete(root, key);
+    }
 
+    private RBNode<Key, Value> delete(RBNode<Key, Value> n, Key key) {
+        if (n == null) return null;
+
+        var cmp = key.compareTo(n.key);
+        if (cmp < 0) n.left = delete(n.left, key);
+        else if (cmp > 0) n.right = delete(n.right, key);
+        else {
+            if (n.left == null) return n.right;
+            if (n.right == null) return n.left;
+
+            var t = n;
+
+            n = min(t);
+            n.right = deleteMin(t.right);
+            n.left = t.left;
+        }
+
+        return n;
+    }
+
+    private RBNode<Key, Value> min(RBNode<Key, Value> n) {
+        if (n == null) return null;
+        if (n.left == null) return n;
+        return min(n.left);
+    }
+
+    @Override
+    public void deleteMin() {
+        if (root == null)  throw new IllegalStateException("The BST is empty");
+        root = deleteMin(root);
+    }
+
+    private RBNode<Key, Value> deleteMin(RBNode<Key, Value> n) {
+        if (n.left == null) return n.right;
+        n.left = deleteMin(n.left);
+        return n;
     }
 
     @Override
