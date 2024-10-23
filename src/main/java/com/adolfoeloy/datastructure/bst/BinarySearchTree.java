@@ -7,9 +7,10 @@ import java.util.PriorityQueue;
  * An elementary implementation for symbol tables can be done with linked lists, however BST improves the execution time
  * for operations in the symbol table.
  */
-public class BinarySearchTree<Key extends Comparable<Key>, Value> {
+public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST<Key, Value> {
     private TreeNode<Key, Value> root;
 
+    @Override
     public void put(Key key, Value value) {
         root = put(root, key, value);
     }
@@ -32,6 +33,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         return node;
     }
 
+    @Override
     public int size() {
         return size(root);
     }
@@ -42,6 +44,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     // time complexity O(1 + depth of the tree)
+    @Override
     public Value get(Key key) {
         var tmp = root;
         while (tmp != null) {
@@ -54,6 +57,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     // implemented with Hibbard's algorithm with time complexity of O(sqrt(N))
+    @Override
     public void delete(Key key) {
         root = delete(root, key);
     }
@@ -106,6 +110,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         return node;
     }
 
+    @Override
     public Iterable<Key> iterator() {
         PriorityQueue<Key> queue = new PriorityQueue<>();
         inorder(queue, root);
