@@ -82,7 +82,6 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
     }
 
     private RBNode<Key, Value> min(RBNode<Key, Value> n) {
-        if (n == null) return null;
         if (n.left == null) return n;
         return min(n.left);
     }
