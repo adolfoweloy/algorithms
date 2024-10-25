@@ -18,7 +18,16 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
     }
 
     private RBNode<Key, Value> put(RBNode<Key, Value> node, Key key, Value value) {
-        if (node == null) return new RBNode<>(key, value, 1);
+        if (node == null) {
+            var newNode = new RBNode<>(key, value, 1);
+
+            // this is what changes when returning a new node
+            newNode.color = Color.RED;
+            return newNode;
+        }
+
+
+        // the search and replacement part remains exactly the same
         var cmp = key.compareTo(node.key);
         if (cmp < 0) {
             node.left = put(node.left, key, value);
@@ -27,8 +36,50 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
         } else {
             node.value = value;
         }
+
+        // and here is the logic to re-balance the tree
+        if (isRed(node.right) && !isRed(node.left)) node = rotateLeft(node); // lean left
+        // situation where a new node is added to a red node on the left
+        // and that will transform the tree into a two red children that will be fixed in the next step with flipColors
+        if (isRed(node.left) && isRed(node.left.left)) node = rotateRight(node);
+        if (isRed(node.left) && isRed(node.right)) flipColors(node); // split 4-node
+
+        // same from standard BST
         node.count = 1 + size(node.left) + size(node.right);
         return node;
+    }
+
+    private boolean isRed(RBNode<Key, Value> node) {
+        if (node == null) return false;
+        return node.isRed();
+    }
+
+    private void flipColors(RBNode<Key,Value> node) {
+        node.color = Color.RED;
+        node.left.color = Color.BLACK;
+        node.right.color = Color.BLACK;
+    }
+
+    private RBNode<Key,Value> rotateLeft(RBNode<Key,Value> node) {
+        var tmp = node.right;
+        node.right = tmp.left;
+        tmp.left = node;
+        tmp.color = node.color;
+        node.color = Color.RED;
+
+        node.count = 1 + size(node.left) + size(node.right);
+        return tmp;
+    }
+
+    private RBNode<Key, Value> rotateRight(RBNode<Key, Value> node) {
+        var tmp = node.left;
+        node.left = tmp.right;
+        tmp.right = node;
+        tmp.color = node.color;
+        node.color = Color.RED;
+
+        node.count = 1 + size(node.left) + size(node.right);
+        return tmp;
     }
 
     @Override

@@ -8,12 +8,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LLRBBinarySearchTreeTest {
 
-    private final LLRBBinarySearchTree<Integer, String> subject =
+    private LLRBBinarySearchTree<Integer, String> subject =
             new LLRBBinarySearchTree<>();
 
     @Test
     @DisplayName("Testing get/put operations")
     void test1() {
+        subject = new LLRBBinarySearchTree<>();
         subject.put(1, "Adolfo");
         assertThat(subject.size()).isEqualTo(1);
 
