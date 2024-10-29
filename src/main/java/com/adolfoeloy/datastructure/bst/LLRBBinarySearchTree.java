@@ -89,7 +89,17 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
 
     @Override
     public int rank(Key key) {
-        return 0;
+        return rank(key, root);
+    }
+
+    private int rank(Key key, RBNode<Key, Value> node) {
+        if (node == null) return 0;
+
+        var cmp = key.compareTo(node.key);
+
+        if (cmp < 0) return rank(key, node.left);
+        else if (cmp > 0) return 1 + size(node.left) + rank(key, node.right);
+        else return size(node.left);
     }
 
     private int size(RBNode<Key, Value> node) {
