@@ -5,6 +5,11 @@ public interface BST<Key extends Comparable<Key>, Value> {
 
     int size();
 
+    /**
+     * How many keys are lesser than key
+     */
+    int rank(Key key);
+
     Value get(Key key);
 
     void delete(Key key);

@@ -87,6 +87,11 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
         return (root == null) ? 0 : root.count;
     }
 
+    @Override
+    public int rank(Key key) {
+        return 0;
+    }
+
     private int size(RBNode<Key, Value> node) {
         if (node == null) return 0;
         return node.count;

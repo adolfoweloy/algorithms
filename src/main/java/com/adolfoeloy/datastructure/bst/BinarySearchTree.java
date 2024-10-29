@@ -38,6 +38,21 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST
         return size(root);
     }
 
+    @Override
+    public int rank(Key key) {
+        return rank(key, root);
+    }
+
+    private int rank(Key key, TreeNode<Key, Value> node) {
+        if (node == null) return 0;
+
+        var cmp = key.compareTo(node.getKey());
+        if (cmp < 0) return rank(key, node.getLeft());
+        else if (cmp > 0) return 1 + size(node.getLeft()) + rank(key, node.getRight());
+        else return size(node.getLeft());
+
+    }
+
     private int size(TreeNode<Key, Value> node) {
         if (node == null) return 0;
         return node.getCount();

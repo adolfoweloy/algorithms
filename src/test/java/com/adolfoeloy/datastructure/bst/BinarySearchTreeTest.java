@@ -1,6 +1,7 @@
 package com.adolfoeloy.datastructure.bst;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,8 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BinarySearchTreeTest {
 
-    private final BinarySearchTree<Integer, String> subject =
-            new BinarySearchTree<>();
+    private BinarySearchTree<Integer, String> subject;
+
+    @BeforeEach
+    void setup() {
+        subject = new BinarySearchTree<>();
+    }
 
     @Test
     @DisplayName("Testing get/put operations")
@@ -116,5 +121,29 @@ class BinarySearchTreeTest {
         assertThat(subject.iterator()).containsExactly(
                 20, 25, 30
         );
+    }
+
+    @Test
+    @DisplayName("Testing rank")
+    void testRank() {
+        var subject2 = new BinarySearchTree<String, Integer>();
+        subject2.put("S", 2);
+        subject2.put("E", 5);
+        subject2.put("A", 5);
+        subject2.put("C", 5);
+        subject2.put("R", 5);
+        subject2.put("X", 5);
+        subject2.put("H", 5);
+        subject2.put("M", 5);
+
+        // notice by examining the iterator printed following inorder traversal
+        // there are 6 keys less than S, 5 keys less than R and 0 keys less than A
+        assertThat(subject2.iterator()).containsExactly(
+                "A", "C", "E", "H", "M", "R", "S", "X"
+        );
+
+        assertThat(subject2.rank("S")).isEqualTo(6);
+        assertThat(subject2.rank("R")).isEqualTo(5);
+        assertThat(subject2.rank("A")).isEqualTo(0);
     }
 }
