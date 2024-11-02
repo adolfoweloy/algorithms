@@ -78,12 +78,9 @@ public class BestTimeToBuyAndSell {
     /**
      * This is the solution from Leetcode.
      * The time complexity is the same as {@code this#maxProfitWithKadane}.
-     * However, I think that this algorithm can be slightly confusing and harder to grasp.
-     * It brings a different approach where min price and max profit are computed separately at
-     * different times when iterating over all prices. This is different of how {@code maxProfitWithKadane}
-     * does because the latter computes both values at the same iteration step. That way I don't
-     * have to think how the algorithm works at different steps that happen accordingly to the
-     * present conditions. I don't want not because of taste, but because it's just harder.
+     * What makes this logic different (compared with maxProfitWithKadane) is that it computes the min price and
+     * the max profit on separate loop iteration. The logic either does one thing or the other while the previous
+     * algorithm computes the min price and max profit on the same iteration.
      */
     public int maxProfit(int[] prices) {
         int minPrice = Integer.MAX_VALUE;
