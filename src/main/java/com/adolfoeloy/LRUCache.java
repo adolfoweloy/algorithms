@@ -51,12 +51,11 @@ public class LRUCache {
         }
     }
 
-    private Node addFront(Node node) {
+    private void addFront(Node node) {
         head.next.prev = node;
         node.next = head.next;
         node.prev = head;
         head.next = node;
-        return node;
     }
 
     private Node moveHead(Node node) {
