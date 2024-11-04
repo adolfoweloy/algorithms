@@ -1,21 +1,21 @@
 package com.adolfoeloy.graph;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Graph {
     private int vertices;
     private int edges;
-    private Set<Integer>[] adj;
+    private List<Integer>[] adj;
 
     @SuppressWarnings("unchecked")
     Graph(int vertices) {
         this.vertices = vertices;
 
         // initialise the adjacency lists
-        adj = (Set<Integer>[]) new Set[vertices];
+        adj = (List<Integer>[]) new List[vertices];
         for (int v = 0; v < vertices; v++) {
-            adj[v] = new HashSet<>();
+            adj[v] = new ArrayList<>();
         }
     }
 
