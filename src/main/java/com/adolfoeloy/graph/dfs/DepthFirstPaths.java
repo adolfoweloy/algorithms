@@ -1,4 +1,7 @@
-package com.adolfoeloy.graph;
+package com.adolfoeloy.graph.dfs;
+
+import com.adolfoeloy.graph.Graph;
+import com.adolfoeloy.graph.GraphPath;
 
 import java.util.Stack;
 

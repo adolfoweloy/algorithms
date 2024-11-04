@@ -9,7 +9,7 @@ public class Graph {
     private List<Integer>[] adj;
 
     @SuppressWarnings("unchecked")
-    Graph(int vertices) {
+    public Graph(int vertices) {
         this.vertices = vertices;
 
         // initialise the adjacency lists
@@ -22,21 +22,21 @@ public class Graph {
     /**
      * Number of vertices.
      */
-    int vertices() {
+    public int vertices() {
         return vertices;
     }
 
     /**
      * Number of edges.
      */
-    int edges() {
+    public int edges() {
         return edges;
     }
 
     /**
      * Add edge v-w to this graph.
      */
-    void addEdge(int v, int w) {
+    public void addEdge(int v, int w) {
         adj[v].add(w);
         adj[w].add(v);
         edges++;
@@ -45,7 +45,7 @@ public class Graph {
     /**
      * Vertices adjacent to v.
      */
-    Iterable<Integer> adjacentVertices(int v) {
+    public Iterable<Integer> adjacentVertices(int v) {
         return adj[v];
     }
 
@@ -57,22 +57,6 @@ public class Graph {
         for (int w : G.adjacentVertices(v)) degree++;
         return degree;
     }
-
-    /**
-     * Compute the vertex with most adjacent vertices and return its degree.
-     */
-    public static int maxDegree(Graph G) {
-        int max = 0;
-        for (int v = 0; v < G.vertices(); v++) {
-            max = Math.max(degree(G, v), max);
-        }
-        return max;
-    }
-
-    public static int avgDegree(Graph G) {
-        return 2 * G.edges() / G.vertices();
-    }
-
 
     @Override
     public String toString() {
