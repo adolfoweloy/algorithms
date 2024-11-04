@@ -1,39 +1,52 @@
 package com.adolfoeloy.graph;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Graph {
     private int vertices;
     private int edges;
+    private Set<Integer>[] adj;
 
+    @SuppressWarnings("unchecked")
     Graph(int vertices) {
         this.vertices = vertices;
+
+        // initialise the adjacency lists
+        adj = (Set<Integer>[]) new Set[vertices];
+        for (int v = 0; v < vertices; v++) {
+            adj[v] = new HashSet<>();
+        }
     }
 
     /**
      * Number of vertices.
      */
     int vertices() {
-        return 0;
+        return vertices;
     }
 
     /**
      * Number of edges.
      */
     int edges() {
-        return 0;
+        return edges;
     }
 
     /**
      * Add edge v-w to this graph.
      */
     void addEdge(int v, int w) {
-
+        adj[v].add(w);
+        adj[w].add(v);
+        edges++;
     }
 
     /**
      * Vertices adjacent to v.
      */
     Iterable<Integer> adjacentVertices(int v) {
-        return null;
+        return adj[v];
     }
 
     /**
