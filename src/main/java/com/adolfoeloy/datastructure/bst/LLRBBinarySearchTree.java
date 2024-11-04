@@ -1,6 +1,7 @@
 package com.adolfoeloy.datastructure.bst;
 
-import java.util.PriorityQueue;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class implements Left-leaning red black BST.
@@ -10,6 +11,7 @@ import java.util.PriorityQueue;
  * although they now have guaranteed O(n log n) time complexity.
  */
 public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements BST<Key, Value> {
+    private final TreeTraversalAlgorithms<Key, Value> traversal = new TreeTraversalAlgorithms<>();
     private RBNode<Key, Value> root;
 
     @Override
@@ -166,21 +168,21 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
     }
 
     @Override
-    public Iterable<Key> iterator() {
-        PriorityQueue<Key> pq = new PriorityQueue<>();
-        inorder(root, pq);
-        return pq;
+    public Iterable<Key> inorderIterator() {
+        List<Key> list = new ArrayList<>();
+        traversal.inorder(list, root);
+        return list;
     }
 
-    private void inorder(RBNode<Key, Value> node, PriorityQueue<Key> pq) {
-        if (node == null) return;
-        inorder(node.left, pq);
-        pq.add(node.key);
-        inorder(node.right, pq);
+    @Override
+    public Iterable<Key> preorderIterator() {
+        List<Key> list = new ArrayList<>();
+        traversal.preorder(list, root);
+        return list;
     }
 
-    private static class RBNode<Key, Value> {
-        private Key key;
+    private static class RBNode<Key, Value> implements TreeNode<Key, Value> {
+        private final Key key;
         private Value value;
         private Color color;
         private int count;
@@ -195,6 +197,31 @@ public class LLRBBinarySearchTree<Key extends Comparable<Key>, Value> implements
 
         boolean isRed() {
             return color == Color.RED;
+        }
+
+        @Override
+        public Key getKey() {
+            return key;
+        }
+
+        @Override
+        public Value getValue() {
+            return value;
+        }
+
+        @Override
+        public TreeNode<Key, Value> getLeft() {
+            return left;
+        }
+
+        @Override
+        public TreeNode<Key, Value> getRight() {
+            return right;
+        }
+
+        @Override
+        public int getCount() {
+            return count;
         }
     }
 

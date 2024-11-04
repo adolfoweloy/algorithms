@@ -41,7 +41,7 @@ class LLRBBinarySearchTreeTest {
         subject.put(2, "Janine");
         subject.put(10, "Isaac");
 
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 1, 2, 10, 12
         );
     }
@@ -58,7 +58,7 @@ class LLRBBinarySearchTreeTest {
         subject.deleteMin();
 
         assertThat(subject.size()).isEqualTo(3);
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 3, 4, 10
         );
     }
@@ -75,7 +75,7 @@ class LLRBBinarySearchTreeTest {
         subject.deleteMin();
 
         assertThat(subject.size()).isEqualTo(3);
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 25, 30, 40
         );
     }
@@ -90,7 +90,7 @@ class LLRBBinarySearchTreeTest {
         subject.deleteMin();
 
         assertThat(subject.size()).isEqualTo(1);
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 40
         );
     }
@@ -114,7 +114,7 @@ class LLRBBinarySearchTreeTest {
         subject.delete(40);
 
         assertThat(subject.size()).isEqualTo(3);
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 20, 25, 30
         );
     }
@@ -134,7 +134,7 @@ class LLRBBinarySearchTreeTest {
 
         // notice by examining the iterator printed following inorder traversal
         // there are 6 keys less than S, 5 keys less than R and 0 keys less than A
-        assertThat(subject2.iterator()).containsExactly(
+        assertThat(subject2.inorderIterator()).containsExactly(
                 "A", "C", "E", "H", "M", "R", "S", "X"
         );
 

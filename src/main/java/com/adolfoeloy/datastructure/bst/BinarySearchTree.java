@@ -1,6 +1,7 @@
 package com.adolfoeloy.datastructure.bst;
 
-import java.util.PriorityQueue;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This Binary search tree (BST) implements a symbol table.
@@ -8,7 +9,8 @@ import java.util.PriorityQueue;
  * for operations in the symbol table.
  */
 public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST<Key, Value> {
-    private TreeNode<Key, Value> root;
+    private final TreeTraversalAlgorithms<Key, Value> traversal = new TreeTraversalAlgorithms<>();
+    private DefaultTreeNode<Key, Value> root;
 
     @Override
     public void put(Key key, Value value) {
@@ -19,8 +21,8 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST
     // if keys come in order, or in natural order, that leads the data-structure to the worst case
     // where all keys are added to the left or all added to the right leading search operations to O(N).
     // if the tree was balanced, this could be achieved in O(log n)
-    private TreeNode<Key, Value> put(TreeNode<Key, Value> node, Key key, Value value) {
-        if (node == null) return new TreeNode<>(key, value, 1);
+    private DefaultTreeNode<Key, Value> put(DefaultTreeNode<Key, Value> node, Key key, Value value) {
+        if (node == null) return new DefaultTreeNode<>(key, value, 1);
         var cmp = key.compareTo(node.getKey());
         if (cmp < 0) {
             node.setLeft(put(node.getLeft(), key, value));
@@ -43,7 +45,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST
         return rank(key, root);
     }
 
-    private int rank(Key key, TreeNode<Key, Value> node) {
+    private int rank(Key key, TreeNode<Key,Value> node) {
         if (node == null) return 0;
 
         var cmp = key.compareTo(node.getKey());
@@ -77,9 +79,10 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST
         root = delete(root, key);
     }
 
+    // Hibbard's deletion algorithm
     // if put/delete with random values for long time enough, one will notice that
     // the structure tends to become unbalanced impacting performance for all other operations.
-    private TreeNode<Key, Value> delete(TreeNode<Key, Value> node, Key key) {
+    private DefaultTreeNode<Key, Value> delete(DefaultTreeNode<Key, Value> node, Key key) {
         if (node == null) return null;
         // first search the key
         var cmp = key.compareTo(node.getKey());
@@ -106,7 +109,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST
         return node;
     }
 
-    private TreeNode<Key, Value> min(TreeNode<Key, Value> node) {
+    private DefaultTreeNode<Key, Value> min(DefaultTreeNode<Key, Value> node) {
         if (node == null) return null;
         if (node.getLeft() == null) return node;
         return min(node.getLeft());
@@ -118,7 +121,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST
         root = deleteMin(root);
     }
 
-    private TreeNode<Key, Value> deleteMin(TreeNode<Key, Value> node) {
+    private DefaultTreeNode<Key, Value> deleteMin(DefaultTreeNode<Key, Value> node) {
         if (node.getLeft() == null) return node.getRight();
         node.setLeft(deleteMin(node.getLeft()));
         node.setCount(1 + size(node.getLeft()) + size(node.getRight()));
@@ -126,16 +129,17 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> implements BST
     }
 
     @Override
-    public Iterable<Key> iterator() {
-        PriorityQueue<Key> queue = new PriorityQueue<>();
-        inorder(queue, root);
+    public Iterable<Key> inorderIterator() {
+        List<Key> queue = new ArrayList<>();
+        traversal.inorder(queue, root);
         return queue;
     }
 
-    private void inorder(PriorityQueue<Key> queue, TreeNode<Key, Value> node) {
-        if (node == null) return;
-        inorder(queue, node.getLeft());
-        queue.add(node.getKey());
-        inorder(queue, node.getRight());
+    @Override
+    public Iterable<Key> preorderIterator() {
+        List<Key> list = new ArrayList<>();
+        traversal.preorder(list, root);
+        return list;
     }
+
 }

@@ -16,5 +16,7 @@ public interface BST<Key extends Comparable<Key>, Value> {
 
     void deleteMin();
 
-    Iterable<Key> iterator();
+    Iterable<Key> inorderIterator();
+
+    Iterable<Key> preorderIterator();
 }

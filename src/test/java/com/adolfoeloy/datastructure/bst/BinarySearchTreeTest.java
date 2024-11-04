@@ -45,7 +45,7 @@ class BinarySearchTreeTest {
         subject.put(2, "Janine");
         subject.put(10, "Isaac");
 
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 1, 2, 10, 12
         );
     }
@@ -62,7 +62,7 @@ class BinarySearchTreeTest {
         subject.deleteMin();
 
         assertThat(subject.size()).isEqualTo(3);
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 3, 4, 10
         );
     }
@@ -79,7 +79,7 @@ class BinarySearchTreeTest {
         subject.deleteMin();
 
         assertThat(subject.size()).isEqualTo(3);
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 25, 30, 40
         );
     }
@@ -94,7 +94,7 @@ class BinarySearchTreeTest {
         subject.deleteMin();
 
         assertThat(subject.size()).isEqualTo(1);
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 40
         );
     }
@@ -118,7 +118,7 @@ class BinarySearchTreeTest {
         subject.delete(40);
 
         assertThat(subject.size()).isEqualTo(3);
-        assertThat(subject.iterator()).containsExactly(
+        assertThat(subject.inorderIterator()).containsExactly(
                 20, 25, 30
         );
     }
@@ -138,12 +138,29 @@ class BinarySearchTreeTest {
 
         // notice by examining the iterator printed following inorder traversal
         // there are 6 keys less than S, 5 keys less than R and 0 keys less than A
-        assertThat(subject2.iterator()).containsExactly(
+        assertThat(subject2.inorderIterator()).containsExactly(
                 "A", "C", "E", "H", "M", "R", "S", "X"
         );
 
         assertThat(subject2.rank("S")).isEqualTo(6);
         assertThat(subject2.rank("R")).isEqualTo(5);
         assertThat(subject2.rank("A")).isEqualTo(0);
+    }
+
+    @Test
+    void testInorderTraversal() {
+        var subject2 = new BinarySearchTree<String, Integer>();
+        subject2.put("S", 2);
+        subject2.put("E", 5);
+        subject2.put("A", 5);
+        subject2.put("C", 5);
+        subject2.put("R", 5);
+        subject2.put("X", 5);
+        subject2.put("H", 5);
+        subject2.put("M", 5);
+
+        assertThat(subject2.preorderIterator()).containsExactly(
+                "S", "E", "A", "C", "R", "H", "M", "X"
+        );
     }
 }
