@@ -7,7 +7,7 @@ public record GenericTreeNode<T>(
         List<GenericTreeNode<T>> children
 ) {
 
-    static <T> GenericTreeNode<T> leafNode(T value) {
+    static <T> GenericTreeNode<T> node(T value) {
         return new GenericTreeNode<>(value, List.of());
     }
 

@@ -6,18 +6,25 @@ import java.util.Set;
 public class LowestCommonAncestorGenericTree {
 
     <T> GenericTreeNode<T> search(GenericTreeNode<T> root, Set<GenericTreeNode<T>> query) {
+        return search(root, query, new HashSet<>());
+    }
+
+    private <T> GenericTreeNode<T> search(
+            GenericTreeNode<T> root,
+            Set<GenericTreeNode<T>> query,
+            HashSet<GenericTreeNode<T>> itemsFound
+    ) {
         if (root == null) return null;
         if (query.contains(root)) return root;
 
-        var results = new HashSet<GenericTreeNode<T>>();
         for (var param : root.children()) {
             var result = search(param, query);
-            if (result != null) results.add(result);
+            if (result != null) itemsFound.add(param);
         }
 
-        if (results.equals(query)) return root;
+        if (itemsFound.equals(query)) return root;
 
-        return results.stream().findFirst().orElse(null);
+        return itemsFound.stream().findFirst().orElse(null);
     }
 
 }
