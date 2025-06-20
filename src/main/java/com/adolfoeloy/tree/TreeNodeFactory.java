@@ -5,13 +5,13 @@ package com.adolfoeloy.tree;
  */
 public class TreeNodeFactory {
 
-    TreeNode create(Integer[] input) {
+    static TreeNode create(Integer[] input) {
         if (input.length == 0) return null;
 
         return buildNode(input, 0);
     }
 
-    private TreeNode buildNode(Integer[] a, int k) {
+    private static TreeNode buildNode(Integer[] a, int k) {
         if (k >= a.length) return null;
         if (a[k] == null) return null;
 
