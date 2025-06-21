@@ -14,9 +14,9 @@ class LowestCommonAncestorGenericTreeTest {
 
     @Test
     void shouldFindLowestCommonAncestorOfTwoEntriesInQuery() {
-        var p = new GenericTreeNode<>(2, List.of());
-        var q = new GenericTreeNode<>(3, List.of());
-        var root = new GenericTreeNode<>(1, List.of(p, q));
+        var p = node(2);
+        var q = node(3);
+        var root = node(1, List.of(p, q));
 
         var result = subject.search(root, Set.of(p, q));
 
@@ -25,9 +25,9 @@ class LowestCommonAncestorGenericTreeTest {
 
     @Test
     void shouldFindLowestCommonAncestorWithOneEntryAsLCA() {
-        var p = new GenericTreeNode<>(2, List.of());
-        var q = new GenericTreeNode<>(3, List.of());
-        var root = new GenericTreeNode<>(1, List.of(p, q));
+        var p = node(2);
+        var q = node (3);
+        var root = node(1, List.of(p, q));
 
         var result = subject.search(root, Set.of(root, p));
 
@@ -35,32 +35,70 @@ class LowestCommonAncestorGenericTreeTest {
     }
 
     @Test
+    void shouldFindRootAsLCAWhenQueryNodesAreInSeparateSubtrees() {
+        var node5 = node(5);
+        var node2 = node(2);
+        var node3 = node(3, List.of(node5));
+        var root = node(1, List.of(node2, node3));
+
+        var result = subject.search(root, Set.of(node2, node5));
+
+        assertThat(result).isEqualTo(root);
+    }
+
+    @Test
+    void shouldFindDeepestCommonAncestorBetweenTwoSiblings() {
+        var node5 = node(5);
+        var node6 = node(6);
+        var node3 = node(3, List.of(node5, node6));
+        var root = node(1, List.of(node3));
+
+        var result = subject.search(root, Set.of(node5, node6));
+
+        assertThat(result).isEqualTo(node3);
+    }
+
+    @Test
     void shouldFindLowestCommonAncestorOfThreeEntriesInQuery() {
+        // nodes to be queried
         var p = node(9);
         var q = node(10);
         var r = node(13);
 
-        var parent = node(2, List.of(
-                node(4),
-                node(8, List.of(p)),
-                node(5, List.of(
-                        q,
-                        node(11),
-                        node(12, List.of(r))
-                ))
-        ));
+        // intermediate nodes
+        var node4 = node(4);
+        var node8 = node(8, List.of(p));
+        var node11 = node(11);
+        var node12 = node(12, List.of(r));
+        var node5 = node(5, List.of(q, node11, node12));
 
-        var root = node(
-                1, List.of(
-                        parent,
-                        node(3, List.of(
-                                node(6),
-                                node(7)
-                        ))
-                ));
+        var node2 = node(2, List.of(node4, node8, node5));
+        var node6 = node(6);
+        var node7 = node(7);
+        var node3 = node(3, List.of(node7, node6));
+
+        var root = node(1, List.of(node2, node3));
 
         var result = subject.search(root, Set.of(p, q, r));
 
-        assertThat(result).isEqualTo(parent);
+        assertThat(result).isEqualTo(node2);
     }
+
+    @Test
+    void shouldFindLowestCommonAncestorBetweenTwoSiblings() {
+        var node8 = node(8);
+        var node9 = node(9);
+        var node4 = node(4, List.of(node8, node9));
+        var node5 = node(5);
+        var node6 = node(6);
+        var node7 = node(7);
+        var node2 = node(2, List.of(node4, node5));
+        var node3 = node(3, List.of(node6, node7));
+        var root = node(1, List.of(node2, node3));
+
+        var result = subject.search(root, Set.of(node4, node5));
+
+        assertThat(result).isEqualTo(node2);
+    }
+
 }
