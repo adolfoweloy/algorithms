@@ -1,30 +1,39 @@
 package com.adolfoeloy.tree;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class LowestCommonAncestorGenericTree {
 
-    <T> GenericTreeNode<T> search(GenericTreeNode<T> root, Set<GenericTreeNode<T>> query) {
-        return search(root, query, new HashSet<>());
+    private static class Result<T> {
+        GenericTreeNode<T> lca;
+        int count;
+
+        Result(GenericTreeNode<T> lca, int count) {
+            this.lca = lca;
+            this.count = count;
+        }
     }
 
-    private <T> GenericTreeNode<T> search(
-            GenericTreeNode<T> root,
-            Set<GenericTreeNode<T>> query,
-            HashSet<GenericTreeNode<T>> itemsFound
-    ) {
-        if (root == null) return null;
-        if (query.contains(root)) return root;
+    <T> GenericTreeNode<T> search(GenericTreeNode<T> root, Set<GenericTreeNode<T>> query) {
+        return searchHelper(root, query).lca;
+    }
 
-        for (var param : root.children()) {
-            var result = search(param, query);
-            if (result != null) itemsFound.add(param);
+    private <T> Result<T> searchHelper(
+            GenericTreeNode<T> root,
+            Set<GenericTreeNode<T>> query
+    ) {
+        if (root == null) return new Result<>(null, 0);
+        int total = query.contains(root) ? 1 : 0;
+
+        for (var child : root.children()) {
+            var result = searchHelper(child, query);
+            if (result.lca != null) return result;
+            total += result.count;
         }
 
-        if (itemsFound.equals(query)) return root;
+        if (total == query.size()) return new Result<>(root, total);
 
-        return itemsFound.stream().findFirst().orElse(null);
+        return new Result<>(null, total);
     }
 
 }
