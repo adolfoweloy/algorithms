@@ -19,3 +19,4 @@ Some fundamental data-structures that may be either implemented or just used to 
 - [Binary heap](src/main/java/com/adolfoeloy/datastructure/heap)
 - [Binary Search Trees](src/main/java/com/adolfoeloy/datastructure/bst) (includes RB BST)
 - [Graphs](src/main/java/com/adolfoeloy/graph)
+ 
