@@ -64,6 +64,16 @@ class CalculatorWithParenthesesTest {
     }
 
     @Test
+    void testEdgeCase1() {
+        assertThat(subject.calculate("1+(2/2+3)")).isEqualTo(5);
+    }
+
+    @Test
+    void testDivisionWithNegativeResultInParentheses() {
+        assertThat(subject.calculate("3/(2/1-4)")).isEqualTo(-1);
+    }
+
+    @Test
     void testSimpleParentheses() {
         assertThat(subject.calculate("(2+3)")).isEqualTo(5);
     }
