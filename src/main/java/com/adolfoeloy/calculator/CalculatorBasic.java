@@ -51,6 +51,14 @@ public class CalculatorBasic {
             return value.matches("\\d+");
         }
 
+        boolean isOpenBracket() {
+            return value.equals("(");
+        }
+
+        boolean isCloseBracket() {
+            return value.equals(")");
+        }
+
         int toNumber() {
             return Integer.parseInt(value);
         }
