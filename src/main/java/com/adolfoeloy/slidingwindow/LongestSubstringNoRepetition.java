@@ -1,27 +1,27 @@
 package com.adolfoeloy.slidingwindow;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 
 public class LongestSubstringNoRepetition {
     public int lengthOfLongestSubstring(String s) {
-        Map<Character, Integer> hash = new HashMap<>();
-        int max = 0;
-        int left = 0;
-        int right = 0;
+        var hash = new HashSet<Character>();
+        var n = s.length();
+        var maxLength = 0;
+        var left = 0;
+        var right = 0;
 
-        while (right < s.length()) {
-            char r = s.charAt(right);
-            hash.put(r, hash.getOrDefault(r, 0) + 1);
-            while (hash.get(r) > 1) {
-                char l = s.charAt(left);
-                hash.put(l, hash.get(l) - 1);
+        while (right < n) {
+            while (left < right && hash.contains(s.charAt(right))) {
+                hash.remove(s.charAt(left));
                 left++;
             }
-            max = Integer.max(max, right - left + 1);
+
+            hash.add(s.charAt(right));
             right++;
+
+            maxLength = Math.max(maxLength, right - left);
         }
 
-        return max;
+        return maxLength;
     }
 }
