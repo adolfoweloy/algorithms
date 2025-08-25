@@ -2,79 +2,49 @@ package com.adolfoeloy.calculator;
 
 import java.util.Stack;
 
-import static com.adolfoeloy.calculator.CalculatorBasic.Operator.*;
-
+/**
+ * Calculator basic is the simplest calculator problem from leetcode.
+ * It consists of expressions with numbers, sum operators and parenthesis.
+ */
 public class CalculatorBasic {
 
     public int calculate(String s) {
-        if (s == null || s.isEmpty()) {
-            return 0;
-        }
+        if (s == null) return 0;
 
-        var expression = s.concat("@"); // dumb character
-        var currentNumber = 0;
-        var lastOperator = ADD; // default operator
-        var stack = new Stack<Integer>();
+        var result = new Stack<Integer>();
 
-        for (char c : expression.toCharArray()) {
-            if (c == ' ') {
-                continue; // skip spaces
+        int sum=0;
+        int num=0;
+        int sign=1; // 1 for positive and -1 for negative
+
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) {
+                num = num * 10 + (c - '0');
+            } else if (c == '+') {
+                sum += sign * num;
+                num = 0;
+                sign = 1;
+            } else if (c == '-') {
+                sum += sign * num;
+                num = 0;
+                sign = -1;
+            } else if (c == '(') {
+                result.push(sum);
+                result.push(sign);
+
+                sign = 1;
+                sum = 0;
+            } else if (c == ')') {
+                sum += sign * num;
+                sum *= result.pop();
+                sum += result.pop();
+
+                num = 0;
             }
-            var token = new Token(String.valueOf(c));
-            if (token.isNumber()) {
-                currentNumber = currentNumber * 10 + token.toNumber();
-            } else {
-                switch (lastOperator) {
-                    case ADD -> stack.push(currentNumber);
-                    case SUBTRACT -> stack.push(-currentNumber);
-                    case MULTIPLY -> stack.push(stack.pop() * currentNumber);
-                    case DIVIDE -> stack.push(stack.pop() / currentNumber);
-                }
-                lastOperator = token.isOperator() ? token.toOperator() : ADD; // default to ADD if not an operator
-                currentNumber = 0; // reset for next number
-            }
         }
 
-        var result = 0;
-        while (!stack.isEmpty()) {
-            result += stack.pop();
-        }
-        return result;
+        sum += sign * num;
+        return sum;
     }
 
-    record Token(String value) {
-        boolean isOperator() {
-            return "+-*/".contains(value);
-        }
-
-        boolean isNumber() {
-            return value.matches("\\d+");
-        }
-
-        boolean isOpenBracket() {
-            return value.equals("(");
-        }
-
-        boolean isCloseBracket() {
-            return value.equals(")");
-        }
-
-        int toNumber() {
-            return Integer.parseInt(value);
-        }
-
-        Operator toOperator() {
-            return switch (value) {
-                case "+" -> ADD;
-                case "-" -> Operator.SUBTRACT;
-                case "*" -> MULTIPLY;
-                case "/" -> DIVIDE;
-                default -> throw new IllegalArgumentException("Invalid operator: " + value);
-            };
-        }
-    }
-
-    enum Operator {
-        ADD, SUBTRACT, MULTIPLY, DIVIDE
-    }
 }
