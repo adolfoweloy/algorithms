@@ -1,4 +1,4 @@
-package com.adolfoeloy;
+package com.adolfoeloy.hashtable;
 
 import com.google.common.annotations.VisibleForTesting;
 

@@ -1,4 +1,4 @@
-package com.adolfoeloy;
+package com.adolfoeloy.hashtable;
 
 import org.junit.jupiter.api.Test;
 
