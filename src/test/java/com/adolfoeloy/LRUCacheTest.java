@@ -8,7 +8,7 @@ class LRUCacheTest {
 
     @Test
     void shouldGetValuesAddedToTheCache() {
-        LRUCache cache = new DefaultLRUCache(3);
+        LRUCache cache = new BuiltInLRUCache(3);
         cache.put(1, 10);
         cache.put(2, 20);
         cache.put(3, 30);
@@ -21,7 +21,7 @@ class LRUCacheTest {
 
     @Test
     void shouldEvictLessRecentlyUsedEntry() {
-        LRUCache cache = new DefaultLRUCache(2);
+        LRUCache cache = new BuiltInLRUCache(2);
         cache.put(1, 10);
         cache.put(2, 20);
 
